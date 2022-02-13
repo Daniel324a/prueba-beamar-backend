@@ -14,6 +14,16 @@ const AppointmentSchema = Mongoose.Schema(
       type: String,
       required: true,
     },
+    scheduledDate: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    scheduledDateEnd: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
   { timestamps: true }
 );

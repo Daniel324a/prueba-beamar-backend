@@ -21,8 +21,8 @@ export const getAppointments = async (req, res) => {
 };
 
 export const postAppointment = async (req, res) => {
-  const { name, email, phone, date } = req.body;
-  const appointment = new Appointments({ name, email, phone, date });
+  const { name, email, phone, scheduledDate, scheduledDateEnd } = req.body;
+  const appointment = new Appointments({ name, email, phone, scheduledDate, scheduledDateEnd });
 
   appointment.save((err, appointment) => {
     if (err) return res.status(400).json({ msg: err.message, errors: err.errors });
@@ -36,7 +36,7 @@ export const postAppointment = async (req, res) => {
 export const deleteAppointment = async (req, res) => {
   const { id } = req.params;
 
-  await Appointments.findByIdAndDelete(id, (err, appointment) => {
+  Appointments.findByIdAndDelete(id, (err, appointment) => {
     if (err) return res.status(400).json({ msg: err.message, errors: err.errors });
 
     res.json({ appointment });
