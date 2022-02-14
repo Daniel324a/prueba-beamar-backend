@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import { getAppointments, postAppointment, deleteAppointment } from '../controllers/appointments';
+import { getAppointments, postAppointment, putAppointment, deleteAppointment } from '../controllers/appointments';
 import { checkDate } from '../middlewares/checkDate';
 
 const router = Router();
@@ -20,6 +20,7 @@ router.post(
   postAppointment
 );
 
+router.put('/:id', checkDate, putAppointment);
 router.delete('/:id', deleteAppointment);
 
 export default router;

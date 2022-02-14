@@ -1,12 +1,12 @@
 import Appointments from '../models/appointment';
 
 export const getAppointments = async (req, res) => {
-  const { busqueda = /.*/ } = req.query;
+  const { search = /.*/ } = req.query;
 
-  const regex = new RegExp(busqueda, 'i');
+  const regex = new RegExp(search, 'i');
 
   const query = {
-    name: regex,
+    $or: [{ name: regex }, { email: regex }, { phone: regex }],
   };
 
   const [total, appointments] = await Promise.all([
@@ -26,6 +26,22 @@ export const postAppointment = async (req, res) => {
   const appointment = new Appointments({ name, email, phone, scheduledDate, scheduledDateEnd });
 
   appointment.save((err, appointment) => {
+    if (err) return res.status(400).json({ msg: err.message, errors: err.errors });
+
+    res.json({
+      ok: true,
+      appointment,
+    });
+  });
+};
+
+export const putAppointment = async (req, res) => {
+  const {
+    params: { id },
+    body,
+  } = req;
+
+  Appointments.findByIdAndUpdate(id, body, (err, appointment) => {
     if (err) return res.status(400).json({ msg: err.message, errors: err.errors });
 
     res.json({
