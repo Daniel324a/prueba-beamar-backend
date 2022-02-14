@@ -1,12 +1,19 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import { getAppointments, postAppointment, putAppointment, deleteAppointment } from '../controllers/appointments';
+import {
+  getAppointments,
+  getAppointmentByID,
+  postAppointment,
+  putAppointment,
+  deleteAppointment,
+} from '../controllers/appointments';
 import { checkDate } from '../middlewares/checkDate';
 
 const router = Router();
 
 router.get('/', getAppointments);
+router.get('/:id', getAppointmentByID);
 
 router.post(
   '/',
