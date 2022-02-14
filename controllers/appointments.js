@@ -15,6 +15,7 @@ export const getAppointments = async (req, res) => {
   ]);
 
   res.json({
+    ok: true,
     total,
     appointments,
   });
@@ -28,6 +29,7 @@ export const postAppointment = async (req, res) => {
     if (err) return res.status(400).json({ msg: err.message, errors: err.errors });
 
     res.json({
+      ok: true,
       appointment,
     });
   });
@@ -39,6 +41,6 @@ export const deleteAppointment = async (req, res) => {
   Appointments.findByIdAndDelete(id, (err, appointment) => {
     if (err) return res.status(400).json({ msg: err.message, errors: err.errors });
 
-    res.json({ appointment });
+    res.json({ appointment, ok: true });
   });
 };
